@@ -39,7 +39,7 @@ API: 使用JSON SERVER模擬
                 sourceProducts:re.data
             })
         })
-# 路由設定 react-router-dom
+# 路由設定 react-router-dom@5.2.0
 # UI套件 Bulma
 >引入Bulma
 @import '../../node_modules/bulma/bulma.sass';

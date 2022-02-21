@@ -137,5 +137,30 @@
       "status": "unavailable"
     }
   ],
-  "carts": []
+  "carts": [
+    {
+      "productId": 3,
+      "name": "Jordan Why Not Zer0.2",
+      "image": "/images/3.jpg",
+      "price": "48900",
+      "mount": 2,
+      "id": 1
+    },
+    {
+      "productId": 5,
+      "name": "adidas Harden Vol.3",
+      "image": "/images/5.jpg",
+      "price": "46900",
+      "mount": 2,
+      "id": 2
+    },
+    {
+      "productId": 6,
+      "name": "Nike Zoom Kobe 1",
+      "image": "/images/6.jpg",
+      "price": "80391",
+      "mount": 1,
+      "id": 3
+    }
+  ]
 }

@@ -39,6 +39,7 @@ class Product extends React.Component {
 
     //設置加入購物車事件並綁定按鈕
     //async function 非同步函式
+    //await
     addCart = async () => {
         try {
             //解構

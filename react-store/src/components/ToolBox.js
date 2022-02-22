@@ -1,4 +1,5 @@
 import React from 'react';
+import {Link} from 'react-router-dom';
 
 class ToolBox extends React.Component{
 
@@ -48,6 +49,10 @@ class ToolBox extends React.Component{
     // ToolBox 子組件 <= Products 父組件 => Product 子組件 => 使用updateCartNum 函數
     // Add Cart Success 觸發
     // 一開始畫面渲染時 componentDidMount()
+
+
+    
+
     
 
     render(){
@@ -70,10 +75,10 @@ class ToolBox extends React.Component{
                         </div>
                     </div>
                 </div>
-                <div className="cart-box">
+                <Link to="/cart" className="cart-box">
                     <i className="fas fa-shopping-cart"></i>
                     <span className="cart-num">({this.props.cartNum})</span>
-                </div>
+                </Link>
             </div>
         )
     }

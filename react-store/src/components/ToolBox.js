@@ -1,5 +1,10 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
+
+//使用<Link to="/cart">
+// import {Link} from 'react-router-dom';
+
+import {withRouter} from 'react-router-dom';
+
 
 class ToolBox extends React.Component{
 
@@ -51,7 +56,12 @@ class ToolBox extends React.Component{
     // 一開始畫面渲染時 componentDidMount()
 
 
-    
+    //購物車的路徑設定不使用<Link to="/cart">
+    //使用import {withRouter} from 'react-router-dom' => 獲得history
+    //使用history.push()
+    goCart = () => {
+        this.props.history.push('/cart');
+    }
 
     
 
@@ -75,13 +85,17 @@ class ToolBox extends React.Component{
                         </div>
                     </div>
                 </div>
-                <Link to="/cart" className="cart-box">
+                {/* <Link to="/cart" className="cart-box">
                     <i className="fas fa-shopping-cart"></i>
                     <span className="cart-num">({this.props.cartNum})</span>
-                </Link>
+                </Link> */}
+                <div to="/cart" className="cart-box" onClick={this.goCart}>
+                    <i className="fas fa-shopping-cart"></i>
+                    <span className="cart-num">({this.props.cartNum})</span>
+                </div>
             </div>
         )
     }
 }
 
-export default ToolBox;
+export default withRouter(ToolBox);

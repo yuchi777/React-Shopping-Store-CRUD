@@ -1,8 +1,9 @@
 //轉換幣值
 export const formatPrice = (cents) =>{
-    return (cents/10).toLocaleString('ja-JP',{
+    //parseInt() 函式能將輸入的字串轉成整數。
+    return parseInt(cents/10).toLocaleString('ja-JP',{
         style:'currency',
         currency:'JPY',
-        minimumFractionDigits:2
+        minimumFractionDigits:0
     })
 }

@@ -43,7 +43,8 @@ class Products extends React.Component{
             // status:'available'
             // }
         ],
-        sourceProducts:[]
+        sourceProducts:[],
+        cartNum: 0
     }
 
     componentDidMount(){
@@ -69,6 +70,9 @@ class Products extends React.Component{
                 sourceProducts:re.data
             })
         })
+
+        //計算購物車商品累加數量
+        this.updateCartNum();
         
     }
 
@@ -167,10 +171,41 @@ class Products extends React.Component{
 
 
 
+    //更新購物車數量
+    // updateCartNum函數 由父組件定義
+    // ToolBox 子組件 <= Products 父組件 => Product 子組件 => 使用updateCartNum 函數
+    updateCartNum = async () =>{
+        const cartNum = await this.initCartNum()
+        this.setState({
+            cartNum: cartNum
+        });
+    }
+
+
+    //使用RESTful API 獲得資料庫資料 => 更新購物車數量 => 使用setState
+    //非同步處理 async => await
+    initCartNum = async () => {
+        const res = await  axios.get('/carts')
+        //定義res.data為carts參數,若無資料則為空陣列[]
+        const carts = res.data || []
+
+        //使用map函數撈取mount數量=>陣列[] //ex. [2,2,1,2]
+        //使用reduce函數計算累加數值,初始值0
+        // const cartNum = carts.map( cart => cart.mount ).reduce((accumulator,currentValue)=>
+        //     accumulator + currentValue,0)
+        // return cartNum
+
+        const cartNum = carts.map( cart => cart.mount ).reduce((accumulator,currentValue)=>{
+            return accumulator + currentValue
+        },0)
+        return cartNum;
+
+    }
+
     render(){
         return(
             <div>
-                <ToolBox search={this.search}/>
+                <ToolBox search={this.search} cartNum={this.state.cartNum}/>
                 <div className="products">
                     <div className="columns is-multiline is-desktop">
 
@@ -180,7 +215,11 @@ class Products extends React.Component{
                                 return(
                                     <CSSTransition classNames="product-fade" timeout={300} key={p.id}>
                                         <div className="column is-3">
-                                            <Product product={p} update={this.update} delete={this.delete}/>
+                                            <Product 
+                                            product={p} 
+                                            update={this.update} 
+                                            delete={this.delete}
+                                            updateCartNum={this.updateCartNum}/>
                                         </div>
                                     </CSSTransition>
                                 );

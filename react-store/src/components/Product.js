@@ -78,11 +78,11 @@ class Product extends React.Component {
                 })
             }
             toast.success('Add Cart Success')
+            //透過Products父組件使用updateCartNum()
+            this.props.updateCartNum();
         } catch (error) {
             toast.error('Add Cart Failed')
         }
-
-
     }
 
     render() {

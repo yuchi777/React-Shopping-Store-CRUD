@@ -6,6 +6,7 @@ class ToolBox extends React.Component{
     
     state = {
         searchText:''
+        
     };
 
     //綁定資料 //input onChange
@@ -27,7 +28,7 @@ class ToolBox extends React.Component{
             searchText:''
         });
 
-        //從父組件獲取函數
+        //從父組件獲取函數帶入空值
         this.props.search('')
     }
 
@@ -38,6 +39,16 @@ class ToolBox extends React.Component{
     // search = (text) =>{
     //     console.log(text);
     // }
+
+
+
+
+    //更新購物車數量
+    // updateCartNum() 函數由Products父組件定義
+    // ToolBox 子組件 <= Products 父組件 => Product 子組件 => 使用updateCartNum 函數
+    // Add Cart Success 觸發
+    // 一開始畫面渲染時 componentDidMount()
+    
 
     render(){
         return(
@@ -61,7 +72,7 @@ class ToolBox extends React.Component{
                 </div>
                 <div className="cart-box">
                     <i className="fas fa-shopping-cart"></i>
-                    <span className="cart-num">(0)</span>
+                    <span className="cart-num">({this.props.cartNum})</span>
                 </div>
             </div>
         )

@@ -1,16 +1,15 @@
 import React from 'react';
-import Header from '../components/Header';
+import Layout from '../Layout';
 
 const Cart = () => {
     return (
-        <div className="main">
-            <Header/>
-            
+
+        <Layout>
             <div className="cart-page">
                 <p className="title has-text-centered">Cart Page</p>
             </div>
+        </Layout>
 
-        </div>
     )
 };
 

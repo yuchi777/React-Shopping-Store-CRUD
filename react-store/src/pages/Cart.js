@@ -4,6 +4,9 @@ import Layout from '../Layout';
 import axios from '../commons/axios';
 import { formatPrice } from '../commons/helpers';
 
+//加入過場效果
+import { TransitionGroup, CSSTransition} from 'react-transition-group';
+
 //動態渲染畫面 : 獲取資料 => 放置內部狀態改變
 //function Component函數組件 : 沒有狀態的渲染,可使用props, 不可使用state, 要使用hook => useState
 //Class Component類別組件 : 可以定義內部狀態 , 可使用state, 可使用componentDidMount
@@ -91,15 +94,21 @@ const Cart = () => {
             <div className="cart-page">
                 <span className="cart-title">Shopping Cart</span>
                 <div className="cart-list">
+                    
+                    <TransitionGroup component={null}>
                     {
                         carts.map((cart) => {
-                            return <CartItem 
-                            key={cart.id} 
-                            cart={cart} 
-                            updateCart={updateCart} 
-                            deleteCart={deleteCart}/>
+                            return<CSSTransition classNames="cart-item" timeout={300} key={cart.id}>
+                                    <CartItem 
+                                    key={cart.id} 
+                                    cart={cart} 
+                                    updateCart={updateCart} 
+                                    deleteCart={deleteCart}/>
+                                    </CSSTransition>
                         })
                     }
+                    </TransitionGroup>
+
                 </div>
                 <div className="cart-total">
                     Total:

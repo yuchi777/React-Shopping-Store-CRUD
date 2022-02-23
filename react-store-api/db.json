@@ -161,14 +161,6 @@
       "price": "80391",
       "mount": 1,
       "id": 3
-    },
-    {
-      "productId": 9,
-      "name": "adidas D.O.N. Issue #1",
-      "image": "/images/9.jpg",
-      "price": "38800",
-      "mount": 2,
-      "id": 4
     }
   ]
 }

@@ -37,9 +37,19 @@ const CartItem = (props) => {
         });
     }
 
+    //刪除資料透過RESTful API 
+    //傳遞cart到父組件Cart Component
+    //綁定事件
+    const deleteCart = () => {
+        // console.log('test');
+        axios.delete(`/carts/${id}`).then((res)=>{
+            props.deleteCart(props.cart);
+        })
+    }
+
     return(
         <div className="columns is-vcentered">
-            <div className="column is-narrow">
+            <div className="column is-narrow" onClick={deleteCart}>
                 <span className="close">X</span>
             </div>
             <div className="column is-narrow">

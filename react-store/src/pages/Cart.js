@@ -75,6 +75,16 @@ const Cart = () => {
 
     }
 
+
+    //接收子組件傳遞的cart
+    //從資料中刪除
+    //使用filter() 過濾傳遞過來的cart
+    //保留不相同的id資料,把相同的id過濾
+    const deleteCart = (cart) => {
+        const _carts = carts.filter( c => c.id !== cart.id);
+        setCarts(_carts);
+    }
+
     return (
 
         <Layout>
@@ -83,7 +93,11 @@ const Cart = () => {
                 <div className="cart-list">
                     {
                         carts.map((cart) => {
-                            return <CartItem key={cart.id} cart={cart} updateCart={updateCart} />
+                            return <CartItem 
+                            key={cart.id} 
+                            cart={cart} 
+                            updateCart={updateCart} 
+                            deleteCart={deleteCart}/>
                         })
                     }
                 </div>

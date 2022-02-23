@@ -5,6 +5,7 @@ import axios from '../commons/axios';
 import { formatPrice } from '../commons/helpers';
 
 //加入過場效果
+//<TransitionGroup component={null}> 取消外層div
 import { TransitionGroup, CSSTransition} from 'react-transition-group';
 
 //動態渲染畫面 : 獲取資料 => 放置內部狀態改變
@@ -110,6 +111,12 @@ const Cart = () => {
                     </TransitionGroup>
 
                 </div>
+                
+                {
+                    carts.length === 0 ? <p className="no-cart">NO GOODS</p> : ''
+                }
+                
+
                 <div className="cart-total">
                     Total:
                     <span className="total-price">{totalPrice()}</span>

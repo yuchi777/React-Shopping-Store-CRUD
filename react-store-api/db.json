@@ -143,24 +143,40 @@
       "name": "Jordan Why Not Zer0.2",
       "image": "/images/3.jpg",
       "price": "48900",
-      "mount": 3,
+      "mount": 1,
       "id": 1
+    },
+    {
+      "productId": 4,
+      "name": "Nike Air Foamposite One",
+      "image": "/images/4.jpg",
+      "price": "73148",
+      "mount": 1,
+      "id": 2
     },
     {
       "productId": 5,
       "name": "adidas Harden Vol.3",
       "image": "/images/5.jpg",
       "price": "46900",
-      "mount": 2,
-      "id": 2
+      "mount": 3,
+      "id": 3
     },
     {
       "productId": 6,
       "name": "Nike Zoom Kobe 1",
       "image": "/images/6.jpg",
       "price": "80391",
+      "mount": 2,
+      "id": 4
+    },
+    {
+      "productId": 7,
+      "name": "Nike Hyperdunk X(2018)",
+      "image": "/images/7.jpg",
+      "price": "54600",
       "mount": 1,
-      "id": 3
+      "id": 5
     }
   ]
 }

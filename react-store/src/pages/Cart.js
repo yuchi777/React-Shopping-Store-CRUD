@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect,useMemo } from 'react';
 import CartItem from '../components/Cartitem';
 import Layout from '../Layout';
 import axios from '../commons/axios';
@@ -59,12 +59,18 @@ const Cart = () => {
 
     //總價格
     // reduce() 方法將一個累加器及陣列中每項元素（由左至右）傳入回呼函式，將陣列化為單一值。
-    const totalPrice = () => {
+    // const totalPrice = () => {
+    //     const totalPrice = carts.map(cart => cart.mount * cart.price).reduce((a, value) => a + value, 0);
+    //     return formatPrice(totalPrice);
+    // }
+    //優化 => 使用hook => useMemo => 返回值不是函數(使用時不能為函數{totalPrice()})
+    const totalPrice = useMemo(()=>{
         const totalPrice = carts.map(cart => cart.mount * cart.price).reduce((a, value) => a + value, 0);
         return formatPrice(totalPrice);
-    }
+    },[carts]);
 
-    //
+
+    //更新資料
     const updateCart = (cart) => {
         //cart為傳遞過來的值
 
@@ -119,7 +125,7 @@ const Cart = () => {
 
                 <div className="cart-total">
                     Total:
-                    <span className="total-price">{totalPrice()}</span>
+                    <span className="total-price">{totalPrice}</span>
                 </div>
             </div>
         </Layout>

@@ -1,4 +1,4 @@
-import React,{useState} from 'react';
+import React,{useState, useMemo} from 'react';
 import { formatPrice } from '../commons/helpers';
 import axios from '../commons/axios';
 
@@ -16,7 +16,12 @@ const CartItem = (props) => {
 
     //總和
     //parseInt() 函式能將輸入的字串轉成整數。
-    const sumPrice = formatPrice(mount * (price))
+    // const sumPrice = formatPrice(mount * (price))
+    //優化 => 使用hook => useMemo
+    const sumPrice = useMemo(()=>{
+        return formatPrice(mount * (price))
+    },[mount,price]);
+
 
     //input綁定狀態
     const handleChange = (e) => {

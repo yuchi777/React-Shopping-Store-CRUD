@@ -2,8 +2,12 @@
   "dependencies": {
     "json-server": "^0.17.0"
   },
-  "scripts":{
-    "start":"json-server --watch db.json --port 3003"
+  "scripts": {
+    "server": "nodemon server.js",
+    "start": "json-server --watch db.json --port 3003"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  }
 }

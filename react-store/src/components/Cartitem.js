@@ -1,16 +1,41 @@
-import React from 'react';
+import React,{useState} from 'react';
 import { formatPrice } from '../commons/helpers';
+import axios from '../commons/axios';
 
-
+//一般在<input>的值,屬性裡要用defaultValue
+//<input>綁定事件時改為屬性用value
 
 const CartItem = (props) => {
 
+    //input的value值要變成可控組件
+    //useState(初始值)
+    const[mount, setMount] = useState(props.cart.mount);
+
     //使用解構賦值
-    const{ name, image, price, mount } = props.cart || {}
+    const{id, name, image, price } = props.cart || {}
 
     //總和
     //parseInt() 函式能將輸入的字串轉成整數。
     const sumPrice = formatPrice(mount * (price))
+
+    //input綁定狀態
+    const handleChange = (e) => {
+        //改變時獲取input值
+        const _mount = parseInt(e.target.value);
+        //改變內部狀態
+        setMount(_mount);
+
+        //獲取一個對象 => 解構 => mount發生變化
+        const newCart = {
+            ...props.cart,
+            mount:_mount
+        }
+
+        //使用RESTful API 修改對應的值 
+        axios.put(`/carts/${id}`, newCart).then((res)=>{
+            props.updateCart(newCart);
+        });
+    }
 
     return(
         <div className="columns is-vcentered">
@@ -27,7 +52,8 @@ const CartItem = (props) => {
                 <span className="price">{formatPrice(price)}</span>
             </div>
             <div className="column">
-                <input type="number" className='input num-input' defaultValue={mount} />
+                {/* <input type="number" className='input num-input' defaultValue={mount} /> */}
+                <input type="number" min={1} className='input num-input' value={mount} onChange={handleChange} />
             </div>
             <div className="column">
                 <span className="sum-price">{sumPrice}</span>

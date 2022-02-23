@@ -1,14 +1,14 @@
-import React,{useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import CartItem from '../components/Cartitem';
 import Layout from '../Layout';
 import axios from '../commons/axios';
 import { formatPrice } from '../commons/helpers';
 
 //動態渲染畫面 : 獲取資料 => 放置內部狀態改變
-//函數組件 : 沒有狀態的渲染,可使用props
-//類別組件 : 可以定義內部狀態 
+//function Component函數組件 : 沒有狀態的渲染,可使用props, 不可使用state, 要使用hook => useState
+//Class Component類別組件 : 可以定義內部狀態 , 可使用state, 可使用componentDidMount
 //生命週期函數(),第一次渲染之後時執行此函數
-//因為componentDidMount 只存在class component => 使用 Hook => useEffect
+//因為componentDidMount 只存在class component,若要在function component使用 => Hook => useEffect
 //使用Hook: 是React v16.8 新增特性,可以在不編寫class情況下使用state以及其他React特性
 //使用Hook => import {useState}
 
@@ -47,15 +47,32 @@ const Cart = () => {
     //         }))
     //     })
     // })
-    useEffect(()=>{
-        axios.get('/carts').then(res => setCarts(res.data) )
-    })
+    // 第二個參數[carts]變化時執行(重複),[]空值=>執行一次
+    useEffect(() => {
+        // console.log('test');
+        axios.get('/carts').then(res => setCarts(res.data))
+    }, [])
 
     //總價格
     // reduce() 方法將一個累加器及陣列中每項元素（由左至右）傳入回呼函式，將陣列化為單一值。
-    const totalPrice = () =>{
-        const totalPrice = carts.map(cart => cart.mount * cart.price).reduce((a,value) => a + value,0);
-        return formatPrice(totalPrice) ;
+    const totalPrice = () => {
+        const totalPrice = carts.map(cart => cart.mount * cart.price).reduce((a, value) => a + value, 0);
+        return formatPrice(totalPrice);
+    }
+
+    //
+    const updateCart = (cart) => {
+        //cart為傳遞過來的值
+
+        //獲取新的數組
+        const newCarts = [...carts];
+        //使用id相等替換相對資料
+        const _index = newCarts.findIndex(re => re.id === cart.id );
+        //splice() 方法可以藉由刪除既有元素並／或加入新元素來改變一個陣列的內容。
+        //array.splice(index[, deleteCount[, item1[, item2[,...]]]])
+        newCarts.splice(_index,1,cart);
+        setCarts(newCarts);
+
     }
 
     return (
@@ -65,8 +82,8 @@ const Cart = () => {
                 <span className="cart-title">Shopping Cart</span>
                 <div className="cart-list">
                     {
-                        carts.map((cart)=>{
-                            return <CartItem key={cart.id} cart={cart}/>
+                        carts.map((cart) => {
+                            return <CartItem key={cart.id} cart={cart} updateCart={updateCart} />
                         })
                     }
                 </div>

@@ -45,4 +45,4 @@ server.listen(3003, () => {
 })
 
 
-//使用nodemon工具 npm add nodemon -D
+//使用nodemon工具 npm i nodemon 

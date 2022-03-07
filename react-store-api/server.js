@@ -2,6 +2,9 @@ const jsonServer = require('json-server')
 const server = jsonServer.create()
 // const router = jsonServer.router('db.json')
 
+//引用jsonwebtoken //驗證通過獲得使用
+const jwt = require('jsonwebtoken');
+
 //載入Node.js 檔案系統 fs module
 const fs = require('fs');
 
@@ -27,7 +30,7 @@ const getUsersDb = () => {
         )
 }
 
-//驗證帳號密碼
+//驗證帳號密碼 //認證
 const isAuthenticated = ({email, password}) => {
     return (  
         //解析 
@@ -40,14 +43,33 @@ const isAuthenticated = ({email, password}) => {
     )
     // return email === 'admin@123.com' && password === 'admin'
 };
+
+const SECRET = 'test123145353jkjkjl343323434';
+const expiresIn = '1h';
+//驗證通過獲得Token 
+//使用jsonwebtoken套件 jwt.sign(payload, secretOrPrivateKey, [options, callback])
+const createToken = (payload) =>{
+    return(
+        jwt.sign(payload, SECRET, {expiresIn})
+    )
+}
+
+
 //自訂串接請求
 server.post('/auth/login', (request,response) => {
     const {email, password} = request.body;
 
     if(isAuthenticated({email,password})){
-        //JWT
-        //驗證通過=>獲得JWT token
-        const jwtToken = 'dfafhdfhdifda.afasfafadfa.adf233r32fe';
+
+        const user = getUsersDb().users.find(
+            u => u.email === email && u.password === password
+        );
+        //解構附值 user => {nickname, type, email}
+        const { nickname, type, email} = user;
+
+        //JWT //驗證通過=>獲得JWT token
+        // const jwtToken = 'dfafhdfhdifda.afasfafadfa.adf233r32fe';
+        const jwtToken = createToken({nickname, type, email});
         return response.status(200).json(jwtToken);
     }else{
         //驗證不通過返回訊息

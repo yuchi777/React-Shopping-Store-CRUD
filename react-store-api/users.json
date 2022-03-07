@@ -3,6 +3,7 @@
     "users" : [
         {
             "id": 1,
+            "nickname": "admin",
             "email": "admin@123.com",
             "password": "admin",
             "type": 1

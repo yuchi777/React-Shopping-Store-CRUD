@@ -139,7 +139,7 @@ import "./css/style.scss";
 
         export default Router;
 
-
+# Node
 # Node.js Web Server
 ### 使用nodemon工具 npm i nodemon 
 
@@ -189,3 +189,19 @@ import "./css/style.scss";
         server.listen(3003, () => {
             console.log('JSON Server is running')
         })
+
+### Node.js - fs module
+
+        Node.js 的 fs module ，是用來操作實體檔案，可以同步或非同步存取檔案系統操作。
+        一般建議使用　非同步存取　檔案，性能高、速度快、無阻塞。
+        
+        非同步讀取檔案
+        我們用
+        fs.readFile(fileName [,options], callback)
+        可以讀取檔案。
+        
+        參數：
+        
+        fileName: 檔案的完整路徑及檔名，格式字串。
+        options: options 可能是一個物件或字串，包含"編碼"及"flag"。這裡預設的編碼是 utf8 ,      flag是 “r"。
+        call back: 是帶兩個參數的function，err及file data，當我們執行readFile完成時, 要做的     事, 例如: 回傳file data。

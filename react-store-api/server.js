@@ -66,7 +66,7 @@ server.post('/auth/login', (request,response) => {
 
         //JWT //驗證通過=>獲得JWT token
         //const jwtToken = 'dfafhdfhdifda.afasfafadfa.adf233r32fe';
-        const jwtToken = createToken({nickname, type});
+        const jwtToken = createToken({nickname, type, email});
         return response.status(200).json(jwtToken);
     }else{
         //驗證不通過返回訊息

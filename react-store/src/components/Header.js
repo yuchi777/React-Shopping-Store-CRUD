@@ -3,6 +3,9 @@ import React from 'react';
 //使用router
 import { Link } from 'react-router-dom';
 
+import Panel from './Panel';
+import UserProfile from './UserProfile';
+
 
 
 // class Header extends React.Component{
@@ -50,6 +53,20 @@ import { Link } from 'react-router-dom';
 
 // 改成 function component 
 const Header = (props) => {
+
+    const toProfile = () =>{
+        Panel.open({
+            component: UserProfile,
+            //UserProfile的props
+            props:{
+                user:props.user
+            },
+            callback: data => {
+                console.log(data);
+            }
+        })
+    }
+
     return (
 
                     <div className="header">
@@ -59,7 +76,7 @@ const Header = (props) => {
                             </div>
                             <div className="end">
                                 {(props.user.nickname) ?
-                                (<span className='nickname'><i className='far fa-user'></i>{props.user.nickname}</span>) :
+                                (<span className='nickname' onClick={toProfile}><i className='far fa-user'></i>{props.user.nickname}</span>) :
                                 (<React.Fragment>
                                     <Link to="/login">Login</Link>
                                     <Link to="/register">Register</Link>

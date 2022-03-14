@@ -1,175 +1,134 @@
-import React, { Fragment } from "react";
+//使用 React Hook Form 函式庫***************************************************
+import React from "react";
+import { useForm } from "react-hook-form";
 
-class Login extends React.Component {
+//使用axios
+import axios from "../commons/axios";
 
-  //********************************* */
-  /** 
-  1. 命名和綁定
-  2. event
-  3. this
-  4. 傳遞參數
-  */
-  //********************************* */
+//使用toast
+import { toast } from 'react-toastify';
 
+//function component
+export default function Login(props) {
 
-  //********************************* */
-  // 綁定this
-  // constructor(){
-  //   super();
-  //   console.log(this);
-  //   this.handleClick = this.handleClick.bind(this);
-  // }
-  //********************************* */
+  //useFrom為函式返回需要用的值並解構附值
+  const { register, handleSubmit, watch, formState: { errors } } = useForm({
+    defaultValues: {
+      email: "",
+      password: ""
+    }
+  });
 
-  
+  console.log(errors);
+  // console.log(watch("email"));
 
-  //********************************* */
-  //直接使用箭頭函式(含綁定this)
-  // msg = 'Clicked';
-  // handleClick = (msg,event)=>{
-  //   // console.log(event.target);
-  //   event.preventDefault();
-  //   console.log(this);
-  //   console.log(event);
-  //   console.log(msg);
-  //   alert(msg);
-  // }
-  //********************************* */
-
-
-  //受控組件
-  //非受控組件 ex. input中的ref={this.emailRef}
-
-
-  state = {
-    email:'',
-    password:'',
-  }
-
-
-
-  // State 設定狀態
-  //(一)
-  // constructor(){
-  //   super();
-  //   this.state = {
-  //     isLike: false
-
-  //   };
-  // }
-
-  // (二)
-  // state = {
-  //   isLike:false,
-  //   count:0,
-  // };
-
-
-  //使用Ref
-  // emailRef = React.createRef();
-  // passwordRef = React.createRef();
-
-  handleSubmit = (event) =>{
-
-    // 1.阻止默認提交送出行為
-    event.preventDefault();
+  const onSubmit = async data => {
 
     // 2.獲取表單數據
     // const formData = {
     //   eamil: this.emailRef.current.value,
     //   password: this.passwordRef.current.value,
     // };
-    console.log(this.state);
+    
+    console.log(data);
 
     // 3.處理登入邏輯
+    //axios串驗證
+    try {
+      //解構附值
+      const { email, password } = data;
+      
+      const response = await axios.post('/auth/login', { email, password });
+      console.log('response:',response);
 
-    // 4.跳轉到首頁
-    // this.props.history.push("/");
+      const jwToken = response.data;
+      console.log('jwToken',jwToken);
+
+      //web storage 物件 
+      //localStorage:可以跨瀏覽器分頁做使用、使用者關掉分頁或瀏覽器再打開資料仍不會消失，且資料無期效限制，資料將永久被保留。(5MB容量)
+      //localStorage存入資料：setItem(key,value)//取出資料:getItem(key)//移除資料:removeItem(key)
+      //sessionStorage：生命週期較短，當使用者關掉瀏覽器或分頁時，sessionStorage 中的資料將被清空。
+      //localStorage.setItem('store_token_id',jwToken) =>global.suth.setToken(jwToken)
+      global.auth.setToken(jwToken);
+
+      toast.success('Login Success');
+
+      // 4.跳轉到首頁
+      props.history.push("/");
+    } catch (error) {
+      console.log(error.response.data);
+      const message = error.response.data.message;
+      toast.error(message);
+
+    }
+
+
+
+
+    
   }
 
-  // handleClick = ()=>{
-  //   使用setState
-  //   this.setState({
-  //     isLike:!this.state.isLike,
-  //     count: this.state.count + 1 ,
-  //   });
 
-  //   this.setState({
-  //     count: this.state.count + 1 ,
-  //   })
+  return (
+    <div className="login-wrapper">
 
-  //   this.setState(prevState=>{
-  //     return { count: prevState.count + 2}
-  //   })
+      {/* //******************************************************************************************** */}
+      {/* 不同事件綁定方式 */}
+      {/* <a href="/" onClick={this.handleClick.bind(this)}>Click</a> */}
+      {/* <a href="/" onClick={(event)=>{this.handleClick(event)}}>Click</a> */}
+      {/* <a href="/" className="button" onClick={(event)=>{this.handleClick('Clicked',event)}}>Click</a> */}
+      {/* <a href="/" className="button" onClick={this.handleClick.bind(this,'Clicked')}>Click</a> */}
+      {/* //******************************************************************************************** */}
 
-  //   console.log(this.state.count);
-  // }
+      <form className="box login-box" onSubmit={handleSubmit(onSubmit)}>
+        <div className="field">
+          <label className="label">Email</label>
+          <div className="control">
 
+            <input
+              className={`input ${errors.email && 'is-danger'}`}
+              type="text"
+              placeholder="Email"
+              name="email"
+              {...register("email", { 
+                required: 'email is required', 
+                pattern: {
+                value: /^[a-za-z0-9_-]+@[a-za-z0-9_-]+(\.[a-za-z0-9_-]+)+$/, //email驗證正則表達式
+                message: 'invalid email' // JS only: <p>error message</p> TS only support string
+              } })}
+            ></input>
 
-  handleChange = (e) =>{
-    // console.log(e);
-    console.log(e.target.value);
-    console.log(e.target.name);
-    //改變狀態
-    this.setState({
-      [e.target.name]:e.target.value.toUpperCase()
-    })
+            {errors.email && (
+              <p className="helper has-text-danger">{errors.email.message}</p>)}
+          </div>
+        </div>
+        <div className="field">
+          <label className="label">Password</label>
+          <div className="control">
 
-  }
-  
+            <input
+              className={`input ${errors.password && 'is-danger'}`}
+              type="password"
+              placeholder="Password"
+              name="password"
+              {...register("password", { 
+                required: 'password is required', 
+                minLength: { value: 6, message: "Min length is 6" } })}
+            ></input>
 
+            {errors.password && (
+              <p className="helper has-text-danger">{errors.password.message}</p>)}
+          </div>
+          <br />
+          <div className="control">
+            <button className="button is-fullwidth is-primary">
+              Login
+            </button>
+          </div>
+        </div>
+      </form>
 
-  render() {
-    return (
-      <Fragment>
-        <div className="login-wrapper">
-
-          {/* //******************************************************************************************** */ }
-          {/* 不同事件綁定方式 */}
-          {/* <a href="/" onClick={this.handleClick.bind(this)}>Click</a> */}
-          {/* <a href="/" onClick={(event)=>{this.handleClick(event)}}>Click</a> */}
-          {/* <a href="/" className="button" onClick={(event)=>{this.handleClick('Clicked',event)}}>Click</a> */}
-          {/* <a href="/" className="button" onClick={this.handleClick.bind(this,'Clicked')}>Click</a> */}
-          {/* //******************************************************************************************** */ }
-
-          <form className="box login-box"  onSubmit={this.handleSubmit}>
-            <div className="field">
-              <label className="label">Email</label>
-              <div className="control">
-                <input
-                  className="input"
-                  type="text"
-                  placeholder="Email"
-                  name="email"
-                  // ref={this.emailRef}
-                  //讀取值與狀態改變
-                  value={this.state.email}
-                  onChange={this.handleChange}
-                ></input>
-              </div>
-            </div>
-            <div className="field">
-              <label className="label">Password</label>
-              <div className="control">
-                <input
-                  className="input"
-                  type="password"
-                  placeholder="Password"
-                  name="password"
-                  // ref={this.passwordRef}
-                  value={this.state.password}
-                  onChange={this.handleChange}
-                ></input>
-              </div>
-              <div className="control">
-                <button className="button is-fullwidth is-primary">
-                  Login
-                </button>
-              </div>
-            </div>
-          </form>
-
-          {/* <div className="control">
+      {/* <div className="control">
             <button className="button is-fullwidth is-link" onClick={this.handleClick}>
               <span className="icon-text">
                 <span className="icon">
@@ -181,10 +140,6 @@ class Login extends React.Component {
           </div> */}
 
 
-        </div>
-      </Fragment>
-    );
-  }
+    </div>
+  )
 }
-
-export default Login;

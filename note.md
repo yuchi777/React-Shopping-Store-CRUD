@@ -141,55 +141,10 @@ import "./css/style.scss";
 
 # Node
 # Node.js Web Server
+
 ### 使用nodemon工具 npm i nodemon 
-
-
-        const jsonServer = require('json-server')
-        const server = jsonServer.create()
-        // const router = jsonServer.router('db.json')
-        
-        //絕對路徑
-        const path = require('path')
-        const router = jsonServer.router(path.join(__dirname, 'db.json'))
-        const middlewares = jsonServer.defaults()
-        
-        //解析
-        server.use(jsonServer.bodyParser);
-        
-        server.use(middlewares)
-        
-        //驗證帳號密碼
-        const isAuthenticated = ({email, password}) =>{
-            return email === 'admin@123.com' && password === 'admin'
-        };
-
-        //自訂串接請求
-        server.post('/auth/login', (request,response) => {
-            const {email, password} = request.body;
-        
-            if(isAuthenticated({email,password})){
-                //JWT
-                //驗證通過獲得JWT token
-                const jwtToken = 'dfafhdfhdifda.afasfafadfa.adf233r32fe';
-                return response.status(200).json(jwtToken);
-            }else{
-                //驗證不通過返回訊息
-                //401 沒有權限,帳號密碼不正確
-                const status = 401 ;
-                const message = "Incorrect email or password";
-                return response.status(status).json({status,message})
-            }
-        
-            // console.log('Login Success test');
-            // return res.status(200).json('Login Success');
-        });
-        
-        
-        server.use(router)
-        server.listen(3003, () => {
-            console.log('JSON Server is running')
-        })
-
+    nodemon server.js 
+    
 ### Node.js - fs module
 
         Node.js 的 fs module ，是用來操作實體檔案，可以同步或非同步存取檔案系統操作。
@@ -205,3 +160,14 @@ import "./css/style.scss";
         fileName: 檔案的完整路徑及檔名，格式字串。
         options: options 可能是一個物件或字串，包含"編碼"及"flag"。這裡預設的編碼是 utf8 ,      flag是 “r"。
         call back: 是帶兩個參數的function，err及file data，當我們執行readFile完成時, 要做的     事, 例如: 回傳file data。
+
+### 使用jsonwebtoken
+
+        install: npm install jsonwebtoken
+
+
+### 使用React Hook Form 表單函式庫
+        https://react-hook-form.com/
+        npm install react-hook-form
+        Hook => 使用function component, 不使用class component
+        

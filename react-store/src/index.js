@@ -16,6 +16,9 @@ import {ToastContainer} from 'react-toastify';
 // 載入toastify css
 import 'react-toastify/dist/ReactToastify.css';
 
+// 存儲jwToken使用localStorage.setItem(key,value)
+import './commons/auth.js';
+
 import "./css/app.scss";
 import "./css/style.scss";
 // import './index.css';

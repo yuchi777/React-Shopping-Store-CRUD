@@ -5,7 +5,7 @@
             "id": 1,
             "nickname": "admin",
             "email": "admin@123.com",
-            "password": "admin",
+            "password": "admin123",
             "type": 1
         }
     ]

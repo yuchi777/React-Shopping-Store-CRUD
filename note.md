@@ -165,7 +165,8 @@ import "./css/style.scss";
 
         install: npm install jsonwebtoken
 
-
+### 使用jwt-decode 解碼
+        npm i jwt-decode
 ### 使用React Hook Form 表單函式庫
         https://react-hook-form.com/
         npm install react-hook-form

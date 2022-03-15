@@ -1,7 +1,12 @@
 //使用jwt-decode
 import jwt_decode from 'jwt-decode';
 
+// 兩種不同的 web storage 物件
+// 1. localStorage：可以跨瀏覽器分頁做使用、使用者關掉分頁或瀏覽器再打開資料仍不會消失，且資料無期效限制，資料將永久被保留。
+// 2. sessionStorage：生命週期較短，當使用者關掉瀏覽器或分頁時，sessionStorage 中的資料將被清空。
+
 //存入jwToken使用localStorage.setItem(key,value)
+//Key
 const JWT = 'store_token_id';
 const setToken = token => {
     localStorage.setItem(JWT, token)
@@ -54,12 +59,21 @@ const getUser = () =>{
     }else{
         return null;
     }
-    
-
 }
+
+
+//登出
+//拿掉token
+//localStorage.removeItem(key)
+//key => JWT = 'store_token_id';
+const logout = () =>{
+    localStorage.removeItem(JWT)
+}
+
 
 //export導出//使用全域global以便每次使用
 global.auth = {
     setToken,
-    getUser
+    getUser,
+    logout
 }

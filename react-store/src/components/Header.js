@@ -1,7 +1,7 @@
 import React from 'react';
 
 //使用router
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 
 import Panel from './Panel';
 import UserProfile from './UserProfile';
@@ -52,6 +52,7 @@ import UserProfile from './UserProfile';
 
 
 // 改成 function component 
+// 父層 Layout => 傳遞props.user
 const Header = (props) => {
 
     const toProfile = () =>{
@@ -63,6 +64,9 @@ const Header = (props) => {
             },
             callback: data => {
                 console.log(data);
+                if( data === 'logout'){
+                    props.history.go(0);
+                }
             }
         })
     }
@@ -89,4 +93,4 @@ const Header = (props) => {
 
 
 
-export default Header;
+export default withRouter(Header);

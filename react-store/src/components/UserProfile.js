@@ -3,6 +3,15 @@ import React from 'react';
 //從Header打開UserProfile彈出視窗並帶入props的user資料
 
 export default function UserProfile(props) {
+
+
+    const logout = () =>{
+        global.auth.logout();
+        props.close('logout');
+
+    }
+
+
     return (
         <div className="user-profle">
             <p className="title has-text-centered">Profile</p>
@@ -36,14 +45,10 @@ export default function UserProfile(props) {
             <br />
             <div className="field is-grouped is-grouped-centered">
                 <div className="control">
-                    <button className="button is-danger">Logout</button>
+                    <button className="button is-danger" type="button" onClick={logout}>Logout</button>
                 </div>
                 <div className="control">
-                    <button className="button" type="button" onClick={()=>{
-                        props.close();
-                    }}>
-                        Cancel
-                    </button>
+                    <button className="button" type="button" onClick={()=>{props.close();}}>Cancel</button>
                 </div>
             </div>
         </div>

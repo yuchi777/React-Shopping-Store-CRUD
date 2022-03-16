@@ -5,7 +5,8 @@ import React from 'react';
 
 import {withRouter} from 'react-router-dom';
 
-
+//使用toast
+import { toast } from 'react-toastify';
 class ToolBox extends React.Component{
 
 
@@ -60,6 +61,13 @@ class ToolBox extends React.Component{
     //使用import {withRouter} from 'react-router-dom' => 獲得history
     //使用history.push()
     goCart = () => {
+
+        //判斷登入才可以使用購物車
+        if(!global.auth.isLogin()){
+            this.props.history.push('/login');
+            toast.info('Please Login')
+            return;
+        }
         this.props.history.push('/cart');
     }
 

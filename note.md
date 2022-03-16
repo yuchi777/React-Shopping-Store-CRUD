@@ -1,16 +1,31 @@
 # Commons
-axios 串接api  
-helpers 匯率符號換算  
-
+        axios 串接api  
+        helpers 匯率符號換算  
+        auth 處理jwToken
 # Components
-Header  
-Panel 彈出控制面板裝載子組件  
-AddInventory 商品庫存增加(彈出控制面板子組件)  
-EditInventory 商品庫存修改(彈出控制面板子組件)  
-Product 產品卡片  
-Products 產品主頁面  
-ToolBox 搜尋列  
-Router 路徑切換  
+        Header 
+        Panel 彈出控制面板裝載子組件  
+        AddInventory 商品庫存增加(彈出控制面板子組件)  
+        EditInventory 商品庫存修改(彈出控制面板子組件)  
+        Product 產品子卡片  
+        Products 產品  
+        ToolBox 搜尋列  
+        UserProfile 使用者資料(從Header打開UserProfile彈出視窗並帶入props的user資料)
+        Cartitem 購物車商品列
+# Pages
+        App <Layout><Products /></Layout>
+        Cart 購物車頁面
+        Login 登入頁面
+        Register 註冊頁面
+        NotFound 無頁面
+
+# Others
+        index 在div#root放置<Router> 
+        Router 路徑切換 /(App),/login,/register,/cart,/notfound 
+
+        Layout 在div.main 放置<Header> & {props.children} 
+        (父層為App.js, <Layout><Products /></Layout>, 
+        <Products/>變動時{props.children}跟著改變)
 
 
 # JSON SERVER
@@ -66,10 +81,7 @@ import 'react-toastify/dist/ReactToastify.css';
 >import fontawesome
 @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css');
 
-### index.html
-        <div id="root"></div>
 
-### index.js
 ### app.scss / style.scss
 >載入toastify套件
 import {ToastContainer} from 'react-toastify';
@@ -79,68 +91,20 @@ import 'react-toastify/dist/ReactToastify.css';
 import "./css/app.scss";  
 import "./css/style.scss";  
 
-        ReactDOM.render(
-            <div>
-                <ToastContainer
-                position="bottom-right"
-                autoClose={5000}
-                hideProgressBar={false}
-                newestOnTop={false}
-                closeOnClick
-                rtl={false}
-                pauseOnFocusLoss
-                draggable
-                pauseOnHover
-                />
-                <Router/>
-            </div>,
-        document.getElementById('root'))
-
-### App.js
-        import React from 'react';
-        import Header from '../components/Header';
-        import Products from '../components/Products';
-
-        class App extends React.Component{
-          render(){
-            return(
-              <div className="main">
-                  <Header nickname="Admin" age={28} marry={true}/>
-                  <Products/>
-              </div>
-            );
-          }
-        }
-
-        export default App;
-
-### Router.js
-# <App/> <Login/> <NotFound/>
-        import React from 'react';
-        import { BrowserRouter, Switch, Route } from 'react-router-dom';
-        import App from './pages/App';
-        import Login from './pages/Login';
-        import NotFound from './pages/NotFound'
-
-
-        const Router = () =>{
-            return(
-                <BrowserRouter>
-                    <Switch>
-                        <Route path="/" exact>
-                        <App/>
-                        </Route>
-                        <Route path="/login" component={Login}/>
-                        <Route component={NotFound}/>
-                    </Switch>
-                </BrowserRouter>
-            );
-        }
-
-        export default Router;
 
 # Node
 # Node.js Web Server
+        Server.js
+
+        // 1 - 載入 Node.js 原生模組 http
+        var http = require('http'); 
+        // 2 - 建立server
+        var server = http.createServer(function (req, res) {   
+        // 在此處理 客戶端向 http server 發送過來的 req。
+        });
+        //3 - 進入此網站的監聽 port, 就是 localhost:xxxx 的 xxxx
+        server.listen(5000); 
+        console.log('Node.js web server at port 5000 is running..')
 
 ### 使用nodemon工具 npm i nodemon 
     nodemon server.js 
@@ -148,23 +112,25 @@ import "./css/style.scss";
 ### Node.js - fs module
 
         Node.js 的 fs module ，是用來操作實體檔案，可以同步或非同步存取檔案系統操作。
-        一般建議使用　非同步存取　檔案，性能高、速度快、無阻塞。
+        一般建議使用非同步存取檔案，性能高、速度快、無阻塞。
         
         非同步讀取檔案
-        我們用
         fs.readFile(fileName [,options], callback)
-        可以讀取檔案。
-        
-        參數：
-        
         fileName: 檔案的完整路徑及檔名，格式字串。
-        options: options 可能是一個物件或字串，包含"編碼"及"flag"。這裡預設的編碼是 utf8 ,      flag是 “r"。
-        call back: 是帶兩個參數的function，err及file data，當我們執行readFile完成時, 要做的     事, 例如: 回傳file data。
+        options: options 可能是一個物件或字串，包含"編碼"及"flag"。這裡預設的編碼是 utf8 , flag是 “r"。
+        call back: 是帶兩個參數的function，err及file data，當我們執行readFile完成時, 要做的事, 例如: 回傳file data。
 
-### 使用jsonwebtoken
+        寫入
+        fs.writeFile(filename, data[, options], callback)
+        fileName: 檔案的完整路徑及檔名，格式字串。
+        data: 要寫入的檔案內容。
+        options: options 可能是一個物件或字串，包含"編碼"及"flag"。這裡預設的編碼是 utf8 , flag是 “w"。
+        call back: 只帶一個錯誤參數err的function，當我們執行writeFile完成時, 要做的事。例如: 寫入成功的訊息顯示；失敗時，丟出err。
+       
+   
 
+### 使用jsonwebtoken 創造Token
         install: npm install jsonwebtoken
-
 ### 使用jwt-decode 解碼
         npm i jwt-decode
 ### 使用React Hook Form 表單函式庫

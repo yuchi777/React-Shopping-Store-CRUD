@@ -239,7 +239,12 @@ class Products extends React.Component{
                         <div className="column is-3">
                             <Product/>
                         </div> */}
-                        <button className="button is-primary add-btn" onClick={this.toAdd}>Add(+)</button>
+                        {
+                            (global.auth.getUser() || {}).type === 1 && (
+                                <button className="button is-primary add-btn" onClick={this.toAdd}>Add(+)</button>
+                            )
+                        }
+                        
                     </div>
                 </div>
             </div>

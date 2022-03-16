@@ -1,10 +1,13 @@
 import React from 'react';
 //使用Panel彈出層
 import Panel from './Panel';
+
 import { formatPrice } from '../commons/helpers'
 import EditInventory from './EditInventory';
 import axios from '../commons/axios';
 import { toast } from 'react-toastify';
+
+import {withRouter} from 'react-router-dom';
 
 class Product extends React.Component {
 
@@ -41,6 +44,17 @@ class Product extends React.Component {
     //async function 非同步函式
     //await
     addCart = async () => {
+
+
+        //判斷登入才可以使用增加商品至購物車功能
+        if(!global.auth.isLogin()){
+            //先import {withRouter} from 'react-router-dom';獲得history方法
+            this.props.history.push('/login');
+            toast.info('Please Login')
+            return;
+        }
+
+
         try {
             //解構
             const { id, name, image, price } = this.props.product;
@@ -85,6 +99,25 @@ class Product extends React.Component {
         }
     }
 
+    //定義函數判斷用戶類型並返回render模板
+    renderMangerBtn = () => {
+
+        //獲取用戶資料,若沒有登入為空給空對象
+        const user = global.auth.getUser() || {}
+
+        if(user.type === 1){
+            return(
+                <div className="p-head has-text-right" onClick={this.toEdit}>
+                    <span className="icon edit-btn">
+                        <i className="fas fa-sliders-h"></i>
+                    </span>
+                </div>
+            );
+        }
+
+    };
+
+
     render() {
         // ES6
         //this.state.products.map((p)=>{ <Product product={p} /> } => this.props.product
@@ -100,11 +133,13 @@ class Product extends React.Component {
             <div className={_pClass[status]}>
                 <div className="p-content">
 
-                    <div className="p-head has-text-right" onClick={this.toEdit}>
+                    {/* <div className="p-head has-text-right" onClick={this.toEdit}>
                         <span className="icon edit-btn">
                             <i className="fas fa-sliders-h"></i>
                         </span>
-                    </div>
+                    </div> */}
+                    {/* 因class component要加this */}
+                    {this.renderMangerBtn()}
 
                     <div className="img-wrapper">
 
@@ -135,4 +170,4 @@ class Product extends React.Component {
     }
 }
 
-export default Product;
+export default withRouter(Product);

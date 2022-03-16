@@ -161,7 +161,10 @@ server.post('/auth/register', (req, res) =>{
 // })
 
 
-server.use(router)
+
+
+
+//server.use(router)
 server.listen(3003, () => {
     console.log('JSON Server is running')
 })

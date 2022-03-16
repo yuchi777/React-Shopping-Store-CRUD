@@ -1,12 +1,1 @@
-
-{
-    "users" : [
-        {
-            "id": 1,
-            "nickname": "admin",
-            "email": "admin@123.com",
-            "password": "admin123",
-            "type": 1
-        }
-    ]
-}
+{"users":[{"id":1,"nickname":"admin","email":"admin@123.com","password":"admin123","type":1},{"id":2,"email":"curry@123.com","password":"curry123","nickname":"curry","type":0}]}

@@ -1,3 +1,5 @@
+//安裝使用nodemon工具 npm i nodemon 
+
 const jsonServer = require('json-server')
 const server = jsonServer.create()
 // const router = jsonServer.router('db.json')
@@ -52,7 +54,7 @@ const createToken = payload =>{
 }
 
 
-//自定義串接請求
+//自定義串接請求 //login
 server.post('/auth/login', (request,response) => {
     const {email, password} = request.body;
 
@@ -81,6 +83,78 @@ server.post('/auth/login', (request,response) => {
 });
 
 
+
+//自定義串接請求 //Register New User
+server.post('/auth/register', (req, res) =>{
+
+    //用戶資訊
+    const { email, password, nickname, type } = req.body;
+    
+    // -----step1 驗證
+    if(isAuthenticated({email, password})){
+        const status = 401;
+        const message = 'Email and Password already exist';
+        return res.status(status).json({status, message});
+    }
+
+    // -----step2 撈取users.json資料
+    //讀取
+    //fs.readFile(fileName [,options], callback)
+    //fileName: 檔案的完整路徑及檔名，格式字串。
+    //options: options 可能是一個物件或字串，包含"編碼"及"flag"。這裡預設的編碼是 utf8 , flag是 “r"。
+    //call back: 是帶兩個參數的function，err及file data，當我們執行readFile完成時, 要做的事, 例如: 回傳file data。
+    fs.readFile(path.join(__dirname, 'users.json'), (err, _data)=>{
+        
+        if(err){
+            const status = 401 ;
+            const message = err ;
+            return res.status(status).json({status, message});
+        }
+
+        //Get current users data
+        //object.toString() 方法返回字串。我們可以獲取所需的數字物件並將其與此函式一起使用以將其轉換為字串。
+        const data = JSON.parse(_data.toString());
+        console.log('usersData:',data);
+        //Get the id of last user
+        const last_item_id = data.users[data.users.length - 1].id;
+        console.log('last_item_id:',last_item_id);
+        //Add new user
+        data.users.push({id: last_item_id + 1, email, password, nickname, type});//add some data
+
+        //寫入
+        //fs.writeFile(filename, data[, options], callback)
+        //fileName: 檔案的完整路徑及檔名，格式字串。
+        //data: 要寫入的檔案內容。
+        //options: options 可能是一個物件或字串，包含"編碼"及"flag"。這裡預設的編碼是 utf8 , flag是 “w"。
+        //call back: 只帶一個錯誤參數err的function，當我們執行writeFile完成時, 要做的事。例如: 寫入成功的訊息顯示；失敗時，丟出err。
+        fs.writeFile(
+            path.join(__dirname, 'users.json'),
+            JSON.stringify(data),
+            (err, result)=>{
+            //Write
+            if(err){
+                const status = 401;
+                const message = err;
+                return res.status(status).json({status,message});
+                
+            }
+        });
+
+    });
+
+
+    //Create token for new user
+    const jwToken = createToken({ nickname, type, email });
+    res.status(200).json(jwToken);
+
+});
+
+
+
+
+
+
+
 //測試請求//get
 // server.get('/auth/login',(req, res)=>{
 //     return res.status(200).json('Get request success!')
@@ -93,4 +167,3 @@ server.listen(3003, () => {
 })
 
 
-//安裝使用nodemon工具 npm i nodemon 

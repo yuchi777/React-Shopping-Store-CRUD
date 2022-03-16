@@ -3,7 +3,8 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import App from './pages/App';
 import Cart from './pages/Cart';
 import Login from './pages/Login';
-import NotFound from './pages/NotFound'
+import NotFound from './pages/NotFound';
+import Register from './pages/Register';
 
 
 const Router = () =>{
@@ -14,6 +15,7 @@ const Router = () =>{
                 <App/>
                 </Route>
                 <Route path="/login" component={Login}/>
+                <Route path="/register" component={Register}/>
                 <Route path="/cart" component={Cart}/>
                 <Route component={NotFound}/>
             </Switch>

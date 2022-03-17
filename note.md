@@ -169,3 +169,8 @@ import "./css/style.scss";
         npm install react-hook-form
         Hook => 使用function component, 不使用class component
         
+
+### 使用serve - npm
+        https://www.npmjs.com/package/serve
+        https://github.com/vercel/serve#readme
+        npm i serve

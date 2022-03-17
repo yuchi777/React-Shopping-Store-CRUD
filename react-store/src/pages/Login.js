@@ -12,7 +12,8 @@ import { toast } from 'react-toastify';
 export default function Login(props) {
 
   //useFrom為函式返回需要用的值並解構附值
-  const { register, handleSubmit, watch, formState: { errors } } = useForm({
+  // const { register, handleSubmit, watch, formState: { errors } }
+  const { register, handleSubmit, formState: { errors } } = useForm({
     defaultValues: {
       email: "",
       password: ""

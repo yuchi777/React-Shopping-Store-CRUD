@@ -54,7 +54,9 @@ const Cart = () => {
     // 第二個參數[carts]變化時執行(重複),[]空值=>執行一次
     useEffect(() => {
         // console.log('test');
-        axios.get('/carts').then(res => setCarts(res.data))
+        // 依據userID判斷資料所屬
+        const user = global.auth.getUser() || {}
+        axios.get(`/carts?userId=${user.email}`).then(res => setCarts(res.data))
     }, [])
 
     //總價格

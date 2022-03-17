@@ -185,9 +185,16 @@ class Products extends React.Component{
     //使用RESTful API 獲得資料庫資料 => 更新購物車數量 => 使用setState
     //非同步處理 async => await
     initCartNum = async () => {
-        const res = await  axios.get('/carts')
+        // 依據userID判斷資料所屬
+        const user = global.auth.getUser() || {}
+        const res = await  axios.get(`/carts`,{
+            //get request透過params傳送參數
+            params:{
+                userId:user.email
+            }
+        });
         //定義res.data為carts參數,若無資料則為空陣列[]
-        const carts = res.data || []
+        const carts = res.data || [] ;
 
         //使用map函數撈取mount數量=>陣列[] //ex. [2,2,1,2]
         //使用reduce函數計算累加數值,初始值0
@@ -195,9 +202,9 @@ class Products extends React.Component{
         //     accumulator + currentValue,0)
         // return cartNum
 
-        const cartNum = carts.map( cart => cart.mount ).reduce((accumulator,currentValue)=>{
-            return accumulator + currentValue
-        },0)
+        const cartNum = carts
+        .map( cart => cart.mount )
+        .reduce((accumulator,currentValue)=> accumulator + currentValue,0)
         return cartNum;
 
     }

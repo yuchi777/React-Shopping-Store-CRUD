@@ -33,10 +33,10 @@ const isTokenExpired = token =>{
         const _info = jwt_decode(token);
         let exp = _info.exp;
         let dateTime = Date.now();
-            console.log('_info.exp',exp);
-            console.log('Date.now()',dateTime);
+            //console.log('_info.exp',exp);
+            //console.log('Date.now()',dateTime/1000);
 
-        if(_info.exp < (Date.now()/1000)){
+        if(exp < (dateTime/1000)){
             return true;
         }else{
             return false;
@@ -71,9 +71,10 @@ const logout = () =>{
 }
 
 
-//export導出//使用全域global以便每次使用
+//原export導出改使用全域global以便每次使用
 global.auth = {
     setToken,
+    getToken,
     getUser,
     isLogin,
     logout

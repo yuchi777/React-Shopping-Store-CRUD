@@ -29,10 +29,10 @@
 
 
 # JSON SERVER
-API: 使用JSON SERVER模擬  
-安裝: npm i json-server  
-設定port: json-server --watch db.json --port 3003  
-"license": "MIT"  
+        API: 使用JSON SERVER模擬  
+        安裝: npm i json-server  
+        設定port: json-server --watch db.json --port 3003  
+        "license": "MIT"  
 
 # 串接API (fetch / axios)
 ### (一)fetch 方法------------------------------
@@ -54,6 +54,28 @@ API: 使用JSON SERVER模擬
                 sourceProducts:re.data
             })
         })
+
+# axios攔截器
+        // Add a request interceptor
+        axios.interceptors.request.use(function (config) {
+            // Do something before request is sent
+            return config;
+          }, function (error) {
+            // Do something with request error
+            return Promise.reject(error);
+          });
+
+        // Add a response interceptor
+        axios.interceptors.response.use(function (response) {
+            // Any status code that lie within the range of 2xx cause this function to trigger
+            // Do something with response data
+            return response;
+          }, function (error) {
+            // Any status codes that falls outside the range of 2xx cause this function to trigger
+            // Do something with response error
+            return Promise.reject(error);
+          });
+          
 # 路由設定 react-router-dom@5.2.0
 # UI套件 Bulma
 >引入Bulma
@@ -131,6 +153,15 @@ import "./css/style.scss";
 
 ### 使用jsonwebtoken 創造Token
         install: npm install jsonwebtoken
+        jwt.sign(payload, secretOrPrivateKey, [options, callback])
+
+        const SECRET = 'test123145353jkjkjl343323434';
+        const expiresIn = '1h'; 
+        jwt.sign(payload, SECRET, {expiresIn});
+
+        JWT放置HTTP HEAD訊息裡Authorization字段裡面
+        request headers --> Authorization
+        Authorization: Bearer <token>
 ### 使用jwt-decode 解碼
         npm i jwt-decode
 ### 使用React Hook Form 表單函式庫

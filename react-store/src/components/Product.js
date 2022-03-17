@@ -56,6 +56,9 @@ class Product extends React.Component {
 
 
         try {
+            // 依據userID判斷資料所屬
+            const user = global.auth.getUser() || {}
+
             //解構
             const { id, name, image, price } = this.props.product;
 
@@ -63,24 +66,31 @@ class Product extends React.Component {
             //使用異步await => 需使用async
             //https://www.casper.tw/development/2020/10/16/async-await/#Promise-%E8%88%87-async-await
             const res = await axios.get(`/carts?productId=${id}`);
-            // console.log(res);
+            console.log('res:',res);
 
             const carts = res.data;
-            console.log(carts);
+            console.log('carts:',carts);
+
             //如果carts不為空且字串長度大於0
             if (carts && carts.length > 0) {
-                const cart = carts[0]
+                
+                const cart = carts[0];
                 cart.mount = cart.mount + 1;
+                //console.log('cartsin...');
+                //console.log('carts[0]',cart);
+                //console.log('cart.mount',cart.mount);
 
                 //更新id為cart.id // 參數cart
                 await axios.put(`/carts/${cart.id}`, cart)
             } else {
+                console.log('adding...');
                 const cart = {
                     productId: id,
                     name: name,
                     image: image,
                     price: price,
-                    mount: 1
+                    mount: 1,
+                    userId: user.email
                 }
 
                 //使用RESTful API
@@ -91,6 +101,7 @@ class Product extends React.Component {
                     console.log(res.data);
                 })
             }
+            
             toast.success('Add Cart Success')
             //透過Products父組件使用updateCartNum()
             this.props.updateCartNum();

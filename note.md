@@ -174,3 +174,6 @@ import "./css/style.scss";
         https://www.npmjs.com/package/serve
         https://github.com/vercel/serve#readme
         npm i serve
+
+### 使用Vercel.com
+        https://vercel.com/yuchi777/react-store/51C8GZg2nCnGRiQe7Boft31KsvzJ

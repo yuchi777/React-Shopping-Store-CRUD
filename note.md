@@ -1,3 +1,9 @@
+# WEB
+        https://react-store-yuchi777.vercel.app/
+# API 
+        https://react-store-api-17e52c835-yuchi777.vercel.app/carts
+        https://react-store-api-17e52c835-yuchi777.vercel.app/products
+        ...
 # Commons
         axios 串接api  
         helpers 匯率符號換算  

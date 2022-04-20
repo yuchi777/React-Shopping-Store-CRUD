@@ -7,7 +7,12 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 In the project directory, you can run:
 
 ### `npm start`
+Runs the app in https://react-store-yuchi777.vercel.app
+api: https://react-store-api-17e52c835-yuchi777.vercel.app
+(but can't write in database)
 
+
+### `npm run dev`
 Runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 

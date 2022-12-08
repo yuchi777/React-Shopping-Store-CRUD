@@ -128,6 +128,7 @@ export default function Login(props) {
           </div>
         </div>
       </form>
+      <div>testEmail:admin@123.com <br> testPassword:admin123</div>
 
       {/* <div className="control">
             <button className="button is-fullwidth is-link" onClick={this.handleClick}>

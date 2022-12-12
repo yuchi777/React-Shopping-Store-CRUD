@@ -57,12 +57,12 @@
       "status": "available"
     },
     {
+      "id": 9,
       "name": "adidas D.O.N. Issue #1",
-      "price": "38800",
-      "status": "available",
-      "tags": "",
       "image": "/images/9.jpg",
-      "id": 9
+      "tags": "",
+      "price": "38800",
+      "status": "available"
     },
     {
       "name": "adidas D.O.N. Issue #1",

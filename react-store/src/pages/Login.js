@@ -80,8 +80,7 @@ export default function Login(props) {
       {/* <a href="/" className="button" onClick={(event)=>{this.handleClick('Clicked',event)}}>Click</a> */}
       {/* <a href="/" className="button" onClick={this.handleClick.bind(this,'Clicked')}>Click</a> */}
       {/* //******************************************************************************************** */}
-      <h5>測試帳號: admin@123.com</h5>
-      <h5>密碼: admin123</h5>
+      
       <form className="box login-box" onSubmit={handleSubmit(onSubmit)}>
         <div className="field">
           <label className="label">Email</label>
@@ -127,6 +126,10 @@ export default function Login(props) {
               Login
             </button>
           </div>
+        </div>
+        <div className="field">
+          <h5>測試帳號: admin@123.com</h5>
+          <h5>密碼: admin123</h5>
         </div>
       </form>
 

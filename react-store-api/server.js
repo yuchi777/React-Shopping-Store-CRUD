@@ -71,6 +71,7 @@ server.post('/auth/login', (request, response) => {
 
     if (isAuthenticated({ email, password })) {
 
+        //array.find() 只會回傳第一個符合條件的值
         const user = getUsersDb().users.find(
             u => u.email === email && u.password === password
         );
@@ -167,7 +168,7 @@ server.post('/auth/register', (req, res) => {
 //     return res.status(200).json('Get request success!')
 // })
 
-
+//購物車判斷
 server.use('/carts', (req, res, next) => {
     if (
         req.headers.authorization === undefined ||

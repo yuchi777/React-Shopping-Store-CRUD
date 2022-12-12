@@ -9,7 +9,7 @@ In the project directory, you can run:
 ### `npm start`
 Runs the app in https://react-store-yuchi777.vercel.app
 api: https://react-store-api-17e52c835-yuchi777.vercel.app
-(but can't write in database)
+(***********but can't write in database)
 
 
 ### `npm run dev`

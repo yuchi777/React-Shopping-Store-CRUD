@@ -36,7 +36,7 @@
 
 # JSON SERVER
         API: 使用JSON SERVER模擬  
-        安裝: npm i json-server  
+        安裝: npm i json-server  (回到node_modules資料夾那一層或使用全域 -g)
         設定port: json-server --watch db.json --port 3003  
         "license": "MIT"  
 
